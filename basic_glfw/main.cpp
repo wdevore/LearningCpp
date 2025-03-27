@@ -2,7 +2,7 @@
 
 #include <glad/gl.h>
 
-// We don't need to include <gl.h> because glfw does it already.
+// We don't need to include opengl <gl.h> because glfw does it already.
 #include <GLFW/glfw3.h>
 
 // Window dimensions

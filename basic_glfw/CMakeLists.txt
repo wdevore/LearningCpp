@@ -1,12 +1,14 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(basic_glfw VERSION 0.1.0 LANGUAGES C CXX)
 
+# I want target only c++17
 set(CMAKE_CXX_STANDARD 17)
 
-# GLFW setup using FetchContent
+# Add Fetch feature
 include(FetchContent)
 
 # ----------------- GLFW -------------------
+# GLFW setup using FetchContent
 FetchContent_Declare(
   glfw
   GIT_REPOSITORY https://github.com/glfw/glfw.git
@@ -44,7 +46,7 @@ target_link_libraries(basic_glfw
   OpenGL
 )
 
-message("glad dir: " ${glad_SOURCE_DIR})
+# message("glad dir: " ${glad_SOURCE_DIR})
 target_include_directories(basic_glfw
   PUBLIC ${GLAD_INCLUDES}
   PUBLIC ${glfw_SOURCE_DIR}/deps

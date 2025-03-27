@@ -31,3 +31,38 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(glfw)
 ```
 I didn't use this approach. I went directly to the URL site https://glad.dav1d.de/ and custom configured a *core 4.6* zip file and then unzipped and copied the header and source into a dependencies folder.
+
+This version builds a library and *then* adds it as a link target:
+```cmake
+include(FetchContent)
+
+FetchContent_Declare(
+  glad
+  GIT_REPOSITORY https://github.com/Dav1dde/glad.git
+  GIT_TAG        v0.1.36 # Use a specific tag/release
+)
+
+FetchContent_MakeAvailable(glad)
+
+# Generate GLAD source and header files
+add_custom_command(
+  OUTPUT ${CMAKE_BINARY_DIR}/glad/src/glad.c ${CMAKE_BINARY_DIR}/glad/include/glad/glad.h
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/glad/src
+  COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/glad/include/glad
+  COMMAND ${CMAKE_COMMAND} -E chdir ${glad_SOURCE_DIR} python ./glad.py --generator c -o ${CMAKE_BINARY_DIR}/glad --api gl=${OPENGL_VERSION} --extensions ${OPENGL_EXTENSIONS}
+  DEPENDS glad # Ensure glad is downloaded first
+)
+
+add_library(glad_lib 
+  ${CMAKE_BINARY_DIR}/glad/src/glad.c
+)
+
+target_include_directories(glad_lib
+  PUBLIC
+    ${CMAKE_BINARY_DIR}/glad/include
+)
+
+# Example of linking against glad
+add_executable(my_app main.c)
+target_link_libraries(my_app glad_lib)
+```
