@@ -2,6 +2,7 @@
 #include <array>
 #include <memory>
 #include <string_view>
+#include <map>
 
 #include "speech.h"
 
@@ -80,6 +81,22 @@ int main(int, char **)
     // const_ref *= 2; // Illegal attempt to modify data through a reference-to-const
 
     std::cout << "Larger of 1.5 and 2.5 is " << larger(1.5, 2.5) << std::endl;
+
+    std::map<std::string, size_t> animal_population{
+        {"humans",
+         7000000000},
+        {"chickens", 17863376000},
+        {"camels",
+         24246291},
+        {"sheep",
+         1086881528},
+    };
+
+    for (const auto &[species, count] : animal_population)
+    {
+        std::cout << "There are " << count << " " << species
+                  << " on this planet.\n";
+    }
 }
 
 // Using reference we can specify the array size.
