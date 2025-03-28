@@ -39,6 +39,7 @@ int main(int, char **)
     if (version == 0)
     {
         std::cout << "Failed to initialize OpenGL context" << std::endl;
+        glfwTerminate();
         return -1;
     }
 
