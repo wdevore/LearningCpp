@@ -20,8 +20,10 @@ FetchContent_MakeAvailable(glfw)
 set(GLAD_SOURCES dependencies/glad/src)
 set(GLAD_INCLUDES dependencies/glad/include)
 
+set(CODE_SOURCES src)
+
 add_executable(basic_triangle
-  main.cpp
+  ${CODE_SOURCES}/main.cpp
   ${GLAD_SOURCES}/glad.c
 )
 
